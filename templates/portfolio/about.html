@@ -21,16 +21,10 @@
                     </div>
                     
                     <div class="mt-6 space-y-2">
-                        {% if profile.location %}
-                            <p class="flex items-center">
-                                <i class="fas fa-map-marker-alt text-indigo-600 mr-2"></i>
-                                <span>{{ profile.location }}</span>
-                            </p>
-                        {% endif %}
                         {% if profile.email %}
                             <p class="flex items-center">
                                 <i class="fas fa-envelope text-indigo-600 mr-2"></i>
-                                <a href="mailto:{{ profile.email }}" class="hover:text-indigo-600">{{ profile.email }}</a>
+                                <a href="mailto:{{ profile.email }}" class="text-indigo-600 hover:text-indigo-800 transition-colors">{{ profile.email }}</a>
                             </p>
                         {% endif %}
                         {% if profile.resume %}
