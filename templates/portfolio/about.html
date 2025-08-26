@@ -21,12 +21,10 @@
                     </div>
                     
                     <div class="mt-6 space-y-2">
-                        {% if profile.email %}
-                            <p class="flex items-center">
-                                <i class="fas fa-envelope text-indigo-600 mr-2"></i>
-                                <a href="mailto:{{ profile.email }}" class="text-indigo-600 hover:text-indigo-800 transition-colors">{{ profile.email }}</a>
-                            </p>
-                        {% endif %}
+                        <p class="flex items-center">
+                            <i class="fas fa-envelope text-indigo-600 mr-2"></i>
+                            <a href="mailto:mbugualawrencee@gmail.com" class="text-indigo-600 hover:text-indigo-800 transition-colors">mbugualawrencee@gmail.com</a>
+                        </p>
                         {% if profile.resume %}
                             <p class="mt-4">
                                 <a href="{{ profile.resume.url }}" class="inline-flex items-center text-indigo-600 hover:text-indigo-800" onclick="event.preventDefault(); window.open('{{ profile.resume.url }}', '_blank', 'noopener,noreferrer');">
