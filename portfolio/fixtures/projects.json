@@ -12,6 +12,7 @@
       "completion_date": "2025-06-15",
       "is_featured": true,
       "display_order": 0,
+      "status": "completed",
       "challenges": "One of the main challenges was ensuring the application was both highly performant and scalable to handle a growing number of users. We needed to optimize database queries and implement efficient caching strategies without compromising data integrity.",
       "solution": "We implemented a combination of Django's built-in caching framework and optimized our database queries using `select_related` and `prefetch_related`. We also used Celery for handling asynchronous tasks, which significantly improved response times and overall performance."
     }
@@ -28,6 +29,8 @@
       "technologies": "React Native, Firebase, JavaScript",
       "completion_date": "2024-08-20",
       "is_featured": false,
+      "display_order": 1,
+      "status": "development",
       "challenges": "Developing a seamless and intuitive user experience for a mobile-first audience was a top priority. This involved extensive user testing and iterating on the UI/UX design to ensure it was accessible to users with varying levels of technical literacy.",
       "solution": "We conducted several rounds of user feedback sessions and A/B testing to refine the app's navigation and layout. By adopting a user-centered design approach, we were able to create an interface that is both powerful and easy to use."
     }
@@ -45,6 +48,7 @@
       "completion_date": "2024-07-05",
       "is_featured": true,
       "display_order": 3,
+      "status": "development",
       "challenges": "Integrating with a third-party weather API and handling potential rate limits and errors required robust error handling and a fallback mechanism to ensure the app remained functional even when the API was unavailable.",
       "solution": "We implemented a resilient API client with built-in retry logic and a caching layer to reduce the number of API calls. We also designed a graceful degradation strategy that would display cached data or a user-friendly message when the API was down."
     }
@@ -62,6 +66,7 @@
       "completion_date": "2024-04-10",
       "is_featured": false,
       "display_order": 4,
+      "status": "completed",
       "challenges": "Implementing the game logic, especially for collision detection and responsive controls, proved to be more complex than anticipated. The game needed to be performant and provide a smooth experience across different devices and screen sizes.",
       "solution": "We developed a grid-based system for the game board, which simplified collision detection and movement logic. We also used event listeners to handle touch and keyboard inputs, ensuring the game was playable on both desktop and mobile devices."
     }
@@ -79,6 +84,7 @@
       "completion_date": "2024-03-22",
       "is_featured": false,
       "display_order": 5,
+      "status": "completed",
       "challenges": "Implementing the AI opponent was the most challenging part of this project. The AI needed to be smart enough to provide a challenge but not so perfect that it would be impossible for the player to win.",
       "solution": "We implemented the minimax algorithm to create an AI that can look ahead and make optimal moves. This resulted in a challenging and engaging opponent that provides a satisfying gameplay experience."
     }
@@ -96,6 +102,7 @@
       "completion_date": "2024-02-18",
       "is_featured": false,
       "display_order": 6,
+      "status": "completed",
       "challenges": "Ensuring accurate timing and handling the state of the stopwatch (e.g., running, paused, reset) required careful state management and use of JavaScript's `Date` object.",
       "solution": "We used a combination of `setInterval` and `Date.now()` to create a precise and reliable timer. We also implemented a state machine to manage the different states of the stopwatch, which made the code more robust and easier to maintain."
     }
@@ -113,6 +120,7 @@
       "completion_date": "2025-05-10",
       "is_featured": true,
       "display_order": 2,
+      "status": "development",
       "challenges": "Creating a secure and compliant healthcare management system required strict adherence to data protection regulations and healthcare standards. We needed to ensure patient data privacy while maintaining system performance.",
       "solution": "We implemented role-based access control, data encryption at rest and in transit, and comprehensive audit logging. We also conducted regular security audits and penetration testing to identify and address potential vulnerabilities."
     }
