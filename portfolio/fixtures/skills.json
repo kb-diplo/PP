@@ -1,0 +1,83 @@
+
+[
+  {
+    "model": "portfolio.skill",
+    "pk": 1,
+    "fields": {
+      "name": "HTML/CSS",
+      "category": "frontend",
+      "proficiency": 85,
+      "display_order": 1
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 2,
+    "fields": {
+      "name": "JavaScript",
+      "category": "frontend",
+      "proficiency": 80,
+      "display_order": 2
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 3,
+    "fields": {
+      "name": "Python (Django)",
+      "category": "backend",
+      "proficiency": 75,
+      "display_order": 1
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 4,
+    "fields": {
+      "name": "Git & GitHub",
+      "category": "devops",
+      "proficiency": 80,
+      "display_order": 1
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 5,
+    "fields": {
+      "name": "SQL & PostgreSQL",
+      "category": "backend",
+      "proficiency": 70,
+      "display_order": 2
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 6,
+    "fields": {
+      "name": "C# (learning)",
+      "category": "backend",
+      "proficiency": 40,
+      "display_order": 3
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 7,
+    "fields": {
+      "name": "Java (beginner)",
+      "category": "backend",
+      "proficiency": 35,
+      "display_order": 4
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 8,
+    "fields": {
+      "name": "C (learning)",
+      "category": "other",
+      "proficiency": 30,
+      "display_order": 1
+    }
+  }
+]

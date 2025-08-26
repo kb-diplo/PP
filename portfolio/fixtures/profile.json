@@ -1,0 +1,18 @@
+[
+  {
+    "model": "portfolio.profile",
+    "pk": 1,
+    "fields": {
+      "name": "Lawrence Mbugua Njuguna",
+      "title": "Junior Developer | Turning Ideas Into Impactful Solutions",
+      "bio": "I'm a junior developer exploring code one step at a time and building projects that work and look good. Passionate about leveraging technology to empower individuals and communities in Africa, I aim to promote transparency, good governance, and equal opportunities.",
+      "email": "mbugualawrencee@gmail.com",
+      "location": "Systems Reengineered Limited, PQMX+857, Azure Towers, Nairobi",
+      "github_url": "https://github.com/kb-diplo",
+      "linkedin_url": "https://www.linkedin.com/in/mbugualawrence",
+      "twitter_url": "https://x.com/mbugualawrencee",
+      "profile_image": "profile/PP.jpg",
+      "resume": "documents/Mbugua lawrence resume.pdf"
+    }
+  }
+]

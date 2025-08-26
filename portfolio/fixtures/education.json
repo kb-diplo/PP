@@ -1,0 +1,28 @@
+[
+  {
+    "model": "portfolio.education",
+    "pk": 1,
+    "fields": {
+      "institution": "ALX Africa",
+      "degree": "AI Career Essentials & Backend Web Development",
+      "field_of_study": "Python Django Based Development",
+      "start_date": "2023-03-01",
+      "end_date": "2024-05-01",
+      "description": "An intensive 12-month software engineering program focused on full-stack development. The curriculum covered foundational concepts in C programming, advanced topics in Python and JavaScript, and practical skills in DevOps, database management, and back-end engineering.",
+      "display_order": 1
+    }
+  },
+  {
+    "model": "portfolio.education",
+    "pk": 2,
+    "fields": {
+      "institution": "KCA University",
+      "degree": "Information Technology",
+      "field_of_study": "Software Development",
+      "start_date": "2024-01-01",
+      "end_date": "2025-11-01",
+      "description": "A comprehensive five stages program providing a strong foundation in software development principles, including algorithms, data structures, software engineering, and database systems.",
+      "display_order": 2
+    }
+  }
+]

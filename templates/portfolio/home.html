@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12">
+    <!-- Hero Section -->
+    <section class="py-12">
+        {% if profile %}
+            <div class="flex flex-col md:flex-row items-center text-center md:text-left">
+                <!-- Profile Image -->
+                {% if profile.profile_image %}
+                    <div class="md:w-1/3 mb-6 md:mb-0 md:pr-8 flex justify-center">
+                        <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="w-48 h-48 rounded-full object-cover shadow-lg">
+                    </div>
+                {% endif %}
+                
+                <!-- Profile Text -->
+                <div class="md:w-2/3">
+                    <h1 class="text-4xl lg:text-5xl font-bold text-gray-800 mb-2">Hello, I'm {{ profile.name }}</h1>
+                    <h2 class="text-2xl text-indigo-600 mb-4">{{ profile.title }}</h2>
+                    <p class="text-gray-600 max-w-2xl {% if profile.profile_image %}mx-auto md:mx-0{% else %}mx-auto{% endif %}">{{ profile.bio }}</p>
+                    <div class="mt-6 flex justify-center md:justify-start space-x-4">
+                        <a href="{% url 'portfolio:projects' %}" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors">View My Work</a>
+                        <a href="{% url 'portfolio:contact' %}" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">Get in Touch</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Skills Section -->
+        <div class="mt-16">
+            <h2 class="text-2xl font-bold mb-8">My Skills</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {% for skill in skills %}
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex justify-between mb-2">
+                        <h3 class="font-semibold">{{ skill.name }}</h3>
+                        <span class="text-indigo-600">{{ skill.proficiency }}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-indigo-600 h-2 rounded-full progress-bar" data-progress="{{ skill.proficiency|default:'0' }}"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects -->
+    <section class="mt-16">
+        <h2 class="text-2xl font-bold mb-8 text-center">Featured Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for project in featured_projects %}
+            <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="h-48 overflow-hidden bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center relative">
+                    {% if project.image and project.image.url %}
+                        {% load static %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-content').style.display='flex';">
+                        <div class="fallback-content absolute inset-0 flex items-center justify-center text-center" style="display: none;">
+                            <div>
+                                <h3 class="text-white text-xl font-bold mb-2 px-4">{{ project.title }}</h3>
+                                {% if project.status == 'development' %}
+                                <i class="fas fa-code text-2xl text-white opacity-80"></i>
+                                {% elif project.status == 'planning' %}
+                                <i class="fas fa-lightbulb text-2xl text-white opacity-80"></i>
+                                {% else %}
+                                <i class="fas fa-laptop-code text-2xl text-white opacity-80"></i>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% else %}
+                    <div class="text-center">
+                        <h3 class="text-white text-xl font-bold mb-2 px-4">{{ project.title }}</h3>
+                        {% if project.status == 'development' %}
+                        <i class="fas fa-code text-2xl text-white opacity-80"></i>
+                        {% elif project.status == 'planning' %}
+                        <i class="fas fa-lightbulb text-2xl text-white opacity-80"></i>
+                        {% else %}
+                        <i class="fas fa-laptop-code text-2xl text-white opacity-80"></i>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-end items-start mb-2">
+                        <span class="text-sm text-gray-500">{{ project.completion_date|date:"M Y" }}</span>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-4">{{ project.description|truncatewords:20 }}</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for tech in project.get_technologies_list|slice:":3" %}
+                        <span class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-full">{{ tech }}</span>
+                        {% endfor %}
+                        {% if project.get_technologies_list|length > 3 %}
+                        <span class="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded-full">+{{ project.get_technologies_list|length|add:"-3" }} more</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <a href="{% url 'portfolio:project_detail' project.pk %}" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                            View Details →
+                        </a>
+                        <div class="flex items-center space-x-2">
+                            {% if project.status == 'completed' %}
+                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Completed</span>
+                            {% elif project.status == 'development' %}
+                                <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">In Development</span>
+                            {% else %}
+                                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Planning</span>
+                            {% endif %}
+                            {% if project.demo_url and project.demo_url != '#' %}
+                            <a href="{{ project.demo_url }}" target="_blank" class="text-gray-500 hover:text-indigo-600" title="Live Demo">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-8">
+            <a href="{% url 'portfolio:projects' %}" class="inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                View All Projects
+            </a>
+        </div>
+    </section>
+</div>
+{% endblock %}

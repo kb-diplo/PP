@@ -1,0 +1,26 @@
+[
+  {
+    "model": "portfolio.experience",
+    "pk": 1,
+    "fields": {
+      "company": "Systems Reengineered Limited, Westlands",
+      "title": "Junior Software Developer (Internship)",
+      "start_date": "2024-08-01",
+      "end_date": null,
+      "description": "Collaborating on software development projects with a focus on backend web development. Building and maintaining applications using Python (Django), C#, and PostgreSQL. Applying best practices in Git version control, debugging, and testing. Learning and contributing to real-world enterprise systems in a team environment.",
+      "display_order": 1
+    }
+  },
+  {
+    "model": "portfolio.experience",
+    "pk": 2,
+    "fields": {
+      "company": "Freelance",
+      "title": "Software Developer",
+      "start_date": "2025-01-01",
+      "end_date": null,
+      "description": "Developed and maintained web applications for various clients. Specialized in creating responsive front-end interfaces and robust back-end systems using Django and modern web technologies. Managed projects end-to-end, from conception to deployment, ensuring timely delivery and client satisfaction.",
+      "display_order": 2
+    }
+  }
+]

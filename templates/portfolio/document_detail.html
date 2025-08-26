@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ document.title }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12">
+    <!-- Breadcrumb Navigation -->
+    <nav class="mb-6">
+        <ol class="flex items-center space-x-2 text-sm text-gray-500">
+            <li>
+                <a href="{% url 'portfolio:home' %}" class="hover:text-indigo-600 transition-colors">Home</a>
+            </li>
+            <li>
+                <i class="fas fa-chevron-right text-xs"></i>
+            </li>
+            <li>
+                <a href="{% url 'portfolio:documents' %}" class="hover:text-indigo-600 transition-colors">Documents</a>
+            </li>
+            <li>
+                <i class="fas fa-chevron-right text-xs"></i>
+            </li>
+            <li class="text-gray-800 font-medium">{{ document.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <!-- Document Header with Download Icon -->
+        <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-6">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold mb-2">{{ document.title }}</h1>
+                    <div class="flex items-center space-x-4">
+                        <span class="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm">
+                            {{ document.get_document_type_display }}
+                        </span>
+                        <span class="text-sm opacity-90">
+                            <i class="fas fa-calendar mr-1"></i> {{ document.created_at|date:"F d, Y" }}
+                        </span>
+                    </div>
+                </div>
+                <div class="mt-4 md:mt-0 flex space-x-3">
+                    <a href="{{ document.file.url }}" download="{{ document.title }}.{{ document.get_file_extension }}" class="px-4 py-2 bg-white text-indigo-600 rounded-lg hover:bg-gray-100 transition-colors flex items-center font-semibold">
+                        <i class="fas fa-download mr-2"></i> Download
+                    </a>
+                    <a href="{% url 'portfolio:documents' %}" class="px-4 py-2 border border-white border-opacity-30 text-white rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to Documents
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Document Description -->
+        {% if document.description %}
+        <div class="p-6 border-b border-gray-100">
+            <h2 class="text-xl font-semibold mb-3">Description</h2>
+            <div class="prose max-w-none text-gray-700">
+                {{ document.description|linebreaksbr }}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Document Viewer -->
+        <div class="p-6">
+            {% if document.can_be_embedded %}
+                <div class="mb-4 flex items-center justify-between">
+                    <h2 class="text-xl font-semibold">{{ document.title }}</h2>
+                    <div class="flex space-x-2">
+                        <a href="{{ document.file.url }}" download="{{ document.title }}.{{ document.get_file_extension }}" class="px-3 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center font-semibold">
+                            <i class="fas fa-download mr-2"></i> Download
+                        </a>
+                        <button onclick="toggleFullscreen()" class="px-3 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors">
+                            <i class="fas fa-expand mr-1"></i> Fullscreen
+                        </button>
+                        <a href="{{ document.file.url }}" target="_blank" class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200 transition-colors">
+                            <i class="fas fa-external-link-alt mr-1"></i> Open in New Tab
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="relative bg-gray-100 rounded-lg overflow-hidden" style="height: 80vh;">
+                    {% if document.is_pdf %}
+                        <iframe 
+                            id="documentViewer"
+                            src="{{ document.file.url }}"
+                            class="w-full h-full border-0"
+                            title="{{ document.title }}">
+                            <p class="p-4 text-center text-gray-600">
+                                Your browser doesn't support PDF viewing. 
+                                <a href="{{ document.file.url }}" target="_blank" class="text-indigo-600 hover:underline">
+                                    Click here to download the document.
+                                </a>
+                            </p>
+                        </iframe>
+                    {% else %}
+                        <!-- Image viewer for JPG, PNG, etc. -->
+                        <div class="w-full h-full flex items-center justify-center bg-black">
+                            <img 
+                                id="documentViewer"
+                                src="{{ document.file.url }}" 
+                                alt="{{ document.title }}"
+                                class="max-w-full max-h-full object-contain"
+                                style="cursor: zoom-in;"
+                                onclick="toggleImageZoom(this)">
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Fallback message for mobile or unsupported browsers -->
+                <div class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg md:hidden">
+                    <div class="flex items-start">
+                        <i class="fas fa-info-circle text-yellow-600 mt-1 mr-2"></i>
+                        <div>
+                            <p class="text-sm text-yellow-800">
+                                <strong>Mobile Viewing:</strong> For the best viewing experience on mobile devices, 
+                                <a href="{{ document.file.url }}" target="_blank" class="underline">download the document</a> 
+                                or open it in a new tab.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="text-center py-12">
+                    <div class="text-gray-400 mb-4">
+                        {% if document.get_file_extension == 'doc' or document.get_file_extension == 'docx' %}
+                            <i class="fas fa-file-word text-6xl text-blue-500"></i>
+                        {% elif document.get_file_extension == 'xls' or document.get_file_extension == 'xlsx' %}
+                            <i class="fas fa-file-excel text-6xl text-green-500"></i>
+                        {% elif document.get_file_extension == 'ppt' or document.get_file_extension == 'pptx' %}
+                            <i class="fas fa-file-powerpoint text-6xl text-orange-500"></i>
+                        {% else %}
+                            <i class="fas fa-file text-6xl"></i>
+                        {% endif %}
+                    </div>
+                    <h3 class="text-xl font-medium text-gray-600 mb-2">Preview not available</h3>
+                    <p class="text-gray-500 mb-4">This document type cannot be previewed in the browser.</p>
+                    <a href="{{ document.file.url }}" target="_blank" class="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                        <i class="fas fa-download mr-2"></i> Download Document
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Document Info -->
+        <footer class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between text-sm text-gray-600">
+                <div class="mb-2 md:mb-0">
+                    <span class="font-medium">File Type:</span> {{ document.get_file_extension|upper }}
+                    {% if document.file.size %}
+                        <span class="ml-4"><span class="font-medium">Size:</span> {{ document.file.size|filesizeformat }}</span>
+                    {% endif %}
+                </div>
+                <div>
+                    <span class="font-medium">Last Updated:</span> {{ document.updated_at|date:"M d, Y g:i A" }}
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<script>
+function toggleFullscreen() {
+    const viewer = document.getElementById('documentViewer');
+    const container = viewer.parentElement;
+    
+    if (!document.fullscreenElement) {
+        container.requestFullscreen().then(() => {
+            container.style.height = '100vh';
+            container.style.position = 'fixed';
+            container.style.top = '0';
+            container.style.left = '0';
+            container.style.width = '100vw';
+            container.style.zIndex = '9999';
+            container.style.backgroundColor = '#000';
+        }).catch(err => {
+            console.log('Error attempting to enable fullscreen:', err);
+        });
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+// Reset styles when exiting fullscreen
+document.addEventListener('fullscreenchange', function() {
+    const viewer = document.getElementById('documentViewer');
+    const container = viewer.parentElement;
+    
+    if (!document.fullscreenElement) {
+        container.style.height = '80vh';
+        container.style.position = 'relative';
+        container.style.top = 'auto';
+        container.style.left = 'auto';
+        container.style.width = 'auto';
+        container.style.zIndex = 'auto';
+        container.style.backgroundColor = '#f3f4f6';
+    }
+});
+
+// Image zoom functionality
+function toggleImageZoom(img) {
+    if (img.style.transform === 'scale(2)') {
+        img.style.transform = 'scale(1)';
+        img.style.cursor = 'zoom-in';
+        img.parentElement.style.overflow = 'hidden';
+    } else {
+        img.style.transform = 'scale(2)';
+        img.style.cursor = 'zoom-out';
+        img.parentElement.style.overflow = 'auto';
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.title }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-12">
+    <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <!-- Project Header -->
+        <header class="relative">
+            <div class="h-96 overflow-hidden bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center relative">
+                {% if project.image and project.image.url %}
+                    {% load static %}
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-content').style.display='flex';">
+                    <div class="fallback-content absolute inset-0 flex items-center justify-center text-center" style="display: none;">
+                        <div>
+                            <h1 class="text-white text-4xl font-bold mb-4 px-6">{{ project.title }}</h1>
+                            {% if project.status == 'development' %}
+                            <i class="fas fa-code text-4xl text-white opacity-80"></i>
+                            {% elif project.status == 'planning' %}
+                            <i class="fas fa-lightbulb text-4xl text-white opacity-80"></i>
+                            {% else %}
+                            <i class="fas fa-laptop-code text-4xl text-white opacity-80"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% else %}
+                <div class="text-center">
+                    <h1 class="text-white text-4xl font-bold mb-4 px-6">{{ project.title }}</h1>
+                    {% if project.status == 'development' %}
+                    <i class="fas fa-code text-4xl text-white opacity-80"></i>
+                    {% elif project.status == 'planning' %}
+                    <i class="fas fa-lightbulb text-4xl text-white opacity-80"></i>
+                    {% else %}
+                    <i class="fas fa-laptop-code text-4xl text-white opacity-80"></i>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
+                <div class="max-w-3xl mx-auto">
+                    <div class="flex flex-wrap items-center gap-2 mb-2">
+                        <span class="px-3 py-1 bg-indigo-600 text-white text-sm rounded-full">
+                            {{ project.completion_date|date:"F Y" }}
+                        </span>
+                        {% if project.is_featured %}
+                        <span class="px-3 py-1 bg-yellow-500 text-white text-sm rounded-full">
+                            Featured
+                        </span>
+                        {% endif %}
+                    </div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-white">{{ project.title }}</h1>
+                </div>
+            </div>
+        </header>
+
+        <!-- Project Content -->
+        <div class="p-6 md:p-8">
+            <!-- Project Meta -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 pb-6 border-b border-gray-100">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-lg font-semibold text-gray-700 mb-2">Technologies Used</h2>
+                    <div class="flex flex-wrap gap-2">
+                        {% for tech in project.get_technologies_list %}
+                        <span class="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full">
+                            {{ tech }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center">
+                        {% if project.status == 'completed' %}
+                            <span class="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full font-medium">
+                                <i class="fas fa-check-circle mr-1"></i> Completed
+                            </span>
+                        {% elif project.status == 'development' %}
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full font-medium">
+                                <i class="fas fa-code mr-1"></i> In Development
+                            </span>
+                        {% else %}
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full font-medium">
+                                <i class="fas fa-lightbulb mr-1"></i> Planning Phase
+                            </span>
+                        {% endif %}
+                    </div>
+                    <div class="flex space-x-2">
+                        {% if project.demo_url and project.demo_url != '#' %}
+                        <a href="{{ project.demo_url }}" target="_blank" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center">
+                            <i class="fas fa-external-link-alt mr-2"></i> Live Demo
+                        </a>
+                        {% endif %}
+                        {% if project.source_code_url and project.source_code_url != '#' %}
+                        <a href="{{ project.source_code_url }}" target="_blank" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center">
+                            <i class="fab fa-github mr-2"></i> Source Code
+                        </a>
+                        {% endif %}
+                        {% if not project.has_live_links %}
+                        <div class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg flex items-center">
+                            <i class="fas fa-hammer mr-2"></i> Coming Soon
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Description -->
+            <div class="prose max-w-none mb-8">
+                <h2 class="text-2xl font-bold mb-4">Project Overview</h2>
+                <div class="prose-lg">
+                    {{ project.description|linebreaksbr }}
+                </div>
+            </div>
+
+            <!-- Project Features -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Key Features</h2>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- These would typically come from a ProjectFeature model -->
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span>Responsive design that works on all devices</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span>Optimized for performance and SEO</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span>Clean and maintainable code</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span>Modern UI/UX design</span>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!-- Project Screenshots -->
+            {% if project.images.all %}
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Screenshots</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {% for image in project.images.all %}
+                    <div class="border rounded-lg overflow-hidden shadow-sm">
+                        <img src="{{ image.image.url }}" alt="{{ image.caption|default:'Project screenshot' }}" class="w-full h-auto transition-transform duration-300 hover:scale-105">
+                        {% if image.caption %}
+                            <p class="text-center text-sm text-gray-600 p-2 bg-gray-50">{{ image.caption }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Project Challenges & Solutions -->
+            {% if project.challenges or project.solution %}
+            <div class="bg-gray-50 p-6 rounded-lg mb-8">
+                <h2 class="text-2xl font-bold mb-4">Challenges & Solutions</h2>
+                <div class="space-y-4 prose max-w-none">
+                    {% if project.challenges %}
+                    <div>
+                        <h3 class="font-semibold text-lg">Challenge</h3>
+                        <div class="text-gray-700">{{ project.challenges|linebreaksbr }}</div>
+                    </div>
+                    {% endif %}
+                    {% if project.solution %}
+                    <div>
+                        <h3 class="font-semibold text-lg">Solution</h3>
+                        <div class="text-gray-700">{{ project.solution|linebreaksbr }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Project Footer -->
+        <footer class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <a href="{% url 'portfolio:projects' %}" class="text-indigo-600 hover:text-indigo-800 mb-2 md:mb-0">
+                    ← Back to Projects
+                </a>
+                <div class="flex space-x-4">
+                    {% if project.demo_url %}
+                    <a href="{{ project.demo_url }}" target="_blank" class="text-gray-600 hover:text-indigo-600">
+                        <i class="fas fa-external-link-alt mr-1"></i> Live Demo
+                    </a>
+                    {% endif %}
+                    {% if project.source_code_url %}
+                    <a href="{{ project.source_code_url }}" target="_blank" class="text-gray-600 hover:text-gray-800">
+                        <i class="fab fa-github mr-1"></i> Source Code
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </footer>
+    </article>
+</div>
+
+<script>
+// No iframe functionality needed since PDFs are now download-only
+</script>
+{% endblock %}

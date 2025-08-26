@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% if profile %}{{ profile.name }} - {{ profile.title }}{% else %}Portfolio{% endif %}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a href="{% url 'portfolio:home' %}" class="text-xl font-bold text-indigo-600">
+                    {% if profile %}{{ profile.name }}{% else %}Portfolio{% endif %}
+                </a>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-indigo-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Desktop menu -->
+                <div class="hidden md:block">
+                    <div class="flex space-x-1">
+                        <a href="{% url 'portfolio:home' %}" class="px-3 py-2 rounded-md text-sm font-medium {% if request.resolver_match.url_name == 'home' %}text-indigo-700 bg-indigo-100{% else %}text-gray-700 hover:bg-gray-100 hover:text-indigo-600{% endif %}">Home</a>
+                        <a href="{% url 'portfolio:about' %}" class="px-3 py-2 rounded-md text-sm font-medium {% if request.resolver_match.url_name == 'about' %}text-indigo-700 bg-indigo-100{% else %}text-gray-700 hover:bg-gray-100 hover:text-indigo-600{% endif %}">About</a>
+                        <a href="{% url 'portfolio:projects' %}" class="px-3 py-2 rounded-md text-sm font-medium {% if request.resolver_match.url_name in 'projects,project_detail' %}text-indigo-700 bg-indigo-100{% else %}text-gray-700 hover:bg-gray-100 hover:text-indigo-600{% endif %}">Projects</a>
+                        <a href="{% url 'portfolio:documents' %}" class="px-3 py-2 rounded-md text-sm font-medium {% if request.resolver_match.url_name in 'documents,document_detail' %}text-indigo-700 bg-indigo-100{% else %}text-gray-700 hover:bg-gray-100 hover:text-indigo-600{% endif %}">Documents</a>
+                        <a href="{% url 'portfolio:contact' %}" class="px-3 py-2 rounded-md text-sm font-medium {% if request.resolver_match.url_name == 'contact' %}text-indigo-700 bg-indigo-100{% else %}text-gray-700 hover:bg-gray-100 hover:text-indigo-600{% endif %}">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
+                <a href="{% url 'portfolio:home' %}" class="block px-3 py-2 rounded-md text-base font-medium {% if request.resolver_match.url_name == 'home' %}bg-indigo-50 text-indigo-700{% else %}text-gray-700 hover:bg-gray-100 hover:text-indigo-600{% endif %}">Home</a>
+                <a href="{% url 'portfolio:about' %}" class="block px-3 py-2 rounded-md text-base font-medium {% if request.resolver_match.url_name == 'about' %}bg-indigo-50 text-indigo-700{% else %}text-gray-700 hover:bg-gray-100 hover:text-indigo-600{% endif %}">About</a>
+                <a href="{% url 'portfolio:projects' %}" class="block px-3 py-2 rounded-md text-base font-medium {% if request.resolver_match.url_name in 'projects,project_detail' %}bg-indigo-50 text-indigo-700{% else %}text-gray-700 hover:bg-gray-100 hover:text-indigo-600{% endif %}">Projects</a>
+                <a href="{% url 'portfolio:documents' %}" class="block px-3 py-2 rounded-md text-base font-medium {% if request.resolver_match.url_name in 'documents,document_detail' %}bg-indigo-50 text-indigo-700{% else %}text-gray-700 hover:bg-gray-100 hover:text-indigo-600{% endif %}">Documents</a>
+                <a href="{% url 'portfolio:contact' %}" class="block px-3 py-2 rounded-md text-base font-medium {% if request.resolver_match.url_name == 'contact' %}bg-indigo-50 text-indigo-700{% else %}text-gray-700 hover:bg-gray-100 hover:text-indigo-600{% endif %}">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="min-h-screen">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p>&copy; {% now "Y" %} {% if profile %}{{ profile.name }}{% else %}Portfolio{% endif %}</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                {% if profile %}
+                    {% if profile.github_url %}<a href="{{ profile.github_url }}" target="_blank" class="text-gray-300 hover:text-white"><i class="fab fa-github text-2xl"></i></a>{% endif %}
+                    {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank" class="text-gray-300 hover:text-white"><i class="fab fa-linkedin text-2xl"></i></a>{% endif %}
+                    {% if profile.twitter_url %}<a href="{{ profile.twitter_url }}" target="_blank" class="text-gray-300 hover:text-white"><i class="fab fa-twitter text-2xl"></i></a>{% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+    // Set progress bar widths after the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        // Progress bars
+        const progressBars = document.querySelectorAll('.progress-bar');
+        progressBars.forEach(bar => {
+            const progress = bar.getAttribute('data-progress') || '0';
+            bar.style.width = progress + '%';
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function() {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                mobileMenu.classList.toggle('hidden');
+                
+                // Toggle between menu and close icon
+                if (isHidden) {
+                    menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                } else {
+                    menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+                });
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInside = mobileMenuButton.contains(event.target) || mobileMenu.contains(event.target);
+                if (!isClickInside && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html>

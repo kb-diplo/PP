@@ -1,0 +1,46 @@
+/* Custom styles */
+.form-input, .form-textarea, .form-select {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent;
+}
+
+/* Add smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Style for code blocks */
+pre {
+    @apply bg-gray-100 p-4 rounded-lg overflow-x-auto my-4;
+}
+
+/* Custom button styles */
+.btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-colors;
+}
+
+.btn-primary {
+    @apply bg-indigo-600 text-white hover:bg-indigo-700;
+}
+
+/* Project card hover effect */
+.project-card {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-indigo-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-indigo-600;
+}

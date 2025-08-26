@@ -1,0 +1,44 @@
+[
+  {
+    "model": "portfolio.document",
+    "pk": 1,
+    "fields": {
+      "title": "Resume - Lawrence Mbugua Njuguna",
+      "description": "Professional resume showcasing experience, skills, and qualifications in software development and technology.",
+      "document_type": "resume",
+      "file": "documents/Mbugua lawrence resume.pdf",
+      "is_public": true,
+      "display_order": 1,
+      "created_at": "2025-08-26T12:00:00Z",
+      "updated_at": "2025-08-26T12:00:00Z"
+    }
+  },
+  {
+    "model": "portfolio.document",
+    "pk": 2,
+    "fields": {
+      "title": "ALX AI Career Essentials Certificate",
+      "description": "Certificate of completion for the ALX AI Career Essentials (AICE) program, demonstrating foundational knowledge in artificial intelligence concepts and applications.",
+      "document_type": "certificate",
+      "file": "documents/66-alx-aice-ai-career-essentials-certificate-lawrence-njuguna.png",
+      "is_public": true,
+      "display_order": 2,
+      "created_at": "2025-08-26T11:43:00Z",
+      "updated_at": "2025-08-26T11:43:00Z"
+    }
+  },
+  {
+    "model": "portfolio.document",
+    "pk": 3,
+    "fields": {
+      "title": "ALX Back-End Web Development Certificate",
+      "description": "Certificate of completion for the ALX Back-End Web Development program, showcasing skills in server-side programming, database management, and API development.",
+      "document_type": "certificate",
+      "file": "documents/70-back-end-web-development-certificate-lawrence-njuguna.png",
+      "is_public": true,
+      "display_order": 3,
+      "created_at": "2025-08-26T11:43:00Z",
+      "updated_at": "2025-08-26T11:43:00Z"
+    }
+  }
+]
