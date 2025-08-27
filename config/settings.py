@@ -175,9 +175,9 @@ if not DEBUG:
 
 # Email configuration for Gmail SMTP
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 
@@ -186,8 +186,9 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@example.com')
 SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'noreply@example.com')
 
 # Admin email for notifications
+admin_email = os.environ.get('ADMIN_EMAIL', 'admin@example.com')
 ADMINS = [
-    ('Lawrence Mbugua', os.environ.get('ADMIN_EMAIL', 'admin@example.com')),
+    ('Lawrence Mbugua', admin_email),
 ]  # Messages will be sent here
 
 # Security settings (enable these in production with DEBUG = False)

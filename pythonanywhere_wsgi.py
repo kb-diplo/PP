@@ -3,11 +3,18 @@
 
 import os
 import sys
+from pathlib import Path
+from dotenv import load_dotenv
 
 # Add your project directory to the Python path
 path = '/home/mbugualawrence/Personal-portfolio'
 if path not in sys.path:
     sys.path.append(path)
+
+# Load environment variables from .env file
+env_path = os.path.join(path, '.env')
+if os.path.exists(env_path):
+    load_dotenv(env_path)
 
 # Set environment variables
 os.environ['DJANGO_SETTINGS_MODULE'] = 'config.settings'

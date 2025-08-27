@@ -43,16 +43,48 @@
    - Delete all the content and paste the content from `pythonanywhere_wsgi.py`
    - Save the file
 
-## Step 4: Set Up Environment Variables
+## Step 4: Set Environment Variables
 
-1. In the "Web" tab, go to the "Environment variables" section
-2. Add the following environment variables:
-   - `DEBUG=False`
-   - `SECRET_KEY=your-secret-key` (use the same as in your local settings)
-   - `ALLOWED_HOSTS=mbugualawrence.pythonanywhere.com,www.mbugualawrence.pythonanywhere.com`
-   - `EMAIL_HOST_USER=your-email@example.com`
-   - `EMAIL_HOST_PASSWORD=your-email-password`
-   - `DEFAULT_FROM_EMAIL=your-email@example.com`
+1. **Create a `.env` file** in your project root with the following content (replace with your actual values):
+
+```bash
+# Django Settings
+# Generate a new secret key: python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
+SECRET_KEY=your-secret-key-here
+DEBUG=False
+ALLOWED_HOSTS=your-username.pythonanywhere.com
+
+# Database
+# SQLite (default) - no additional configuration needed
+# For MySQL, uncomment and configure:
+# DB_NAME=your_db_name
+# DB_USER=your_db_user
+# DB_PASSWORD=your_db_password
+# DB_HOST=your-db-host.mysql.pythonanywhere-services.com
+
+# Email Configuration (Required for contact form)
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=your-email@gmail.com
+EMAIL_HOST_PASSWORD=your-app-specific-password  # Generate from Google Account > Security > App passwords
+DEFAULT_FROM_EMAIL=your-email@gmail.com
+SERVER_EMAIL=your-email@gmail.com
+ADMIN_EMAIL=your-email@gmail.com
+```
+
+2. **For Gmail SMTP Access**:
+   - Go to your Google Account > Security
+   - Enable 2-Step Verification if not already enabled
+   - Go to App passwords
+   - Generate a new app password for your PythonAnywhere app
+   - Use this app password as `EMAIL_HOST_PASSWORD`
+
+3. **On PythonAnywhere**:
+   - Go to the "Web" tab in your dashboard
+   - Click on "Add a new environment variable"
+   - Add each environment variable from your `.env` file
+   - Make sure to use the actual values, not the placeholders
 
 ## Step 5: Set Up the Database
 
