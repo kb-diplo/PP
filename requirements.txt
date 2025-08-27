@@ -1,9 +1,18 @@
+# Core dependencies
 Django==5.2.5
-asgiref==3.9.1
-sqlparse==0.5.3
-tzdata==2025.2
-django-browser-reload==1.18.0
-gunicorn==21.2.0
-psycopg2-binary==2.9.9
-whitenoise==6.6.0
-python-decouple==3.8
+gunicorn==23.0.0
+Pillow==11.3.0
+python-dotenv==1.0.0
+whitenoise==6.7.0
+
+# Development dependencies
+pylint-django==2.5.5
+
+# Database
+pymysql==1.1.1  # Only needed if using MySQL
+
+# Caching
+python-memcached==1.59  # If using Memcached on PythonAnywhere
+
+# Email
+sendgrid==6.11.0  # If using SendGrid for email
