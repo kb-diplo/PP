@@ -20,7 +20,7 @@ env.bak/
 venv.bak/
 
 # Media files (uploaded content)
-media/
+# media/  # Removed to include media files in version control
 
 # Static files (collected)
 staticfiles/
